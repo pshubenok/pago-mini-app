@@ -1,10 +1,10 @@
 body {
     background-color: white;
-    padding: 6em;
+    padding: 6rem;
 }
 
 .title, .title-red {
-    font-size: 8em;
+    font-size: 8rem;
     font-family: 'aremat font', sans-serif;
     line-height: 100%;
 }
@@ -38,8 +38,8 @@ body {
 }
 
 .btn-floating.action-button {
-    height: 20em;
-    width: 20em;
+    height: 20rem;
+    width: 20rem;
     background: #F7F7F7;
     align-items: center;
     display: flex;
@@ -48,10 +48,10 @@ body {
 }
 
 .gap-6 {
-    gap: 6em;
+    gap: 6rem;
 }
 .gap-3 {
-    gap: 3em;
+    gap: 3rem;
 }
 
 .action-icon-container {
@@ -61,8 +61,8 @@ body {
     margin-left: auto;
     border-radius: 50%;
     background: #F7F7F7;
-    height: 16em;
-    width: 16em;
+    height: 16rem;
+    width: 16rem;
 }
 
 .inputs-container {
@@ -70,13 +70,13 @@ body {
 }
 
 .text-input.default {
-    font-size: 4em !important;
+    font-size: 4rem !important;
     height: unset !important;
     transition: unset !important;
     color: #565555;
     border-bottom: 0 !important;
     background-color: #F7F7F7 !important;
-    border-radius: 0.2em !important;
+    border-radius: 0.2rem !important;
     padding: 1rem !important;
 }
 
@@ -92,12 +92,12 @@ body {
 }
 
 .select {
-    font-size: 4em !important;
+    font-size: 4rem !important;
     height: unset !important;
     transition: unset !important;
     color: #565555;
     border-bottom: 0 !important;
     background-color: #F7F7F7 !important;
-    border-radius: 0.2em !important;
+    border-radius: 0.2rem !important;
     padding: 1rem !important;
 }
