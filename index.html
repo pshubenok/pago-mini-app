@@ -13,26 +13,77 @@
     </head>
 <body>
 <div class="flex-column">
-    <span class="title">Pago</span>
-    <span class="title-red">Pay</span>
-    <div class="flex-column-aligned buttons-container gap-10">
-        <div class="flex-row-aligned gap-10">
-            <a class="btn-floating waves-effect waves-light action-button">
+    <div class="flex-row">
+        <div class="flex-column">
+            <span class="title">Pago</span>
+            <span class="title-red">Pay</span>
+        </div>
+        <div class="action-icon-container">
+            <img class="action-icon">
+        </div>
+    </div>
+    <div class="flex-column-aligned buttons-container gap-6">
+        <div class="flex-row-aligned gap-6">
+            <a class="btn-floating waves-effect waves-light action-button" onclick="onButtonClick(1)">
                 <img src="assets/image1.png">
             </a>
-            <a class="btn-floating waves-effect waves-light action-button">
+            <a class="btn-floating waves-effect waves-light action-button" onclick="onButtonClick(2)">
                 <img src="assets/image2.png">
             </a>
         </div>
-        <div class="flex-row-aligned gap-10">
-            <a class="btn-floating waves-effect waves-light action-button">
+        <div class="flex-row-aligned gap-6">
+            <a class="btn-floating waves-effect waves-light action-button" onclick="onButtonClick(3)">
                 <img src="assets/image3.png">
             </a>
-            <a class="btn-floating waves-effect waves-light action-button">
+            <a class="btn-floating waves-effect waves-light action-button" onclick="onButtonClick(4)">
                 <img src="assets/image4.png">
             </a>
+        </div>
+    </div>
+    <div class="flex-column-aligned inputs-container gap-3">
+        <div class="flex-row flex-1">
+            <input placeholder="Price" type="text" class="text-input default">
+        </div>
+        <div class="flex-row flex-1">
+            <input placeholder="Token / # phone / # loyalty" type="text" class="text-input default">
+        </div>
+        <div class="flex-row flex-1">
+            <input placeholder="Points" type="text" class="text-input default flex-1">
+        </div>
+        <div class="flex-row flex-1">
+            <select class="browser-default select">
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+            </select>
         </div>
     </div>
 </div>
 </body>
 </html>
+
+<script>
+
+    function onButtonClick(action) {
+        var container = document.getElementsByClassName('buttons-container')[0];
+        var actionIcon = document.getElementsByClassName('action-icon')[0];
+        var inputsContainer = document.getElementsByClassName('inputs-container')[0];
+        var actionIconContainer = document.getElementsByClassName('action-icon-container')[0];
+
+        if (action === 1) {
+            actionIcon.src = 'assets/image1.png';
+        } else if (action === 2) {
+            actionIcon.src = 'assets/image2.png';
+        } else if (action === 3) {
+            actionIcon.src = 'assets/image3.png';
+        } else if (action === 4) {
+            actionIcon.src = 'assets/image4.png';
+        }
+
+        container.style.display = 'none';
+        inputsContainer.style.display = 'flex';
+        actionIconContainer.style.display = 'flex';
+    }
+
+
+</script>
