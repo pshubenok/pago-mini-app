@@ -101,3 +101,17 @@ body {
     border-radius: 0.2rem !important;
     padding: 1rem !important;
 }
+
+.request-button {
+    background-color: black !important;
+    line-height: 100% !important;
+    font-size: 4rem !important;
+    border: 0 !important;
+    cursor: pointer !important;
+    color: white !important;
+    font-family: 'aremat font', sans-serif !important;
+    height: unset !important;
+    padding: 1.6rem 5rem !important;
+    border-radius: 4rem !important;
+    text-transform: unset !important;
+}

@@ -42,16 +42,16 @@
     </div>
     <div class="flex-column-aligned inputs-container gap-3">
         <div class="flex-row flex-1">
-            <input placeholder="Price" type="text" class="text-input default">
+            <input id="price" placeholder="Price" type="text" class="text-input default">
         </div>
         <div class="flex-row flex-1">
-            <input placeholder="Token / # phone / # loyalty" type="text" class="text-input default">
+            <input id="token" placeholder="Token / # phone / # loyalty" type="text" class="text-input default">
         </div>
         <div class="flex-row flex-1">
-            <input placeholder="Points" type="text" class="text-input default flex-1">
+            <input id="points" placeholder="Points" type="text" class="text-input default flex-1">
         </div>
         <div class="flex-row flex-1">
-            <select class="browser-default select">
+            <select id="shop" class="browser-default select">
                 <option value="1">Perekrestok</option>
                 <option value="2">Magnit</option>
                 <option value="3">Vkusvill</option>
@@ -60,12 +60,17 @@
                 <option value="6">Diksi</option>
             </select>
         </div>
+
+        <a class="waves-effect waves-light btn request-button" onclick="onSubmit()">Request</a>
     </div>
 </div>
 </body>
 </html>
 
 <script>
+
+    Telegram.WebApp.ready();
+
 
     function onButtonClick(action) {
         var container = document.getElementsByClassName('buttons-container')[0];
@@ -86,6 +91,24 @@
         container.style.display = 'none';
         inputsContainer.style.display = 'flex';
         actionIconContainer.style.display = 'flex';
+
+
+    }
+
+    function onSubmit() {
+        var points = document.getElementById('points').value;
+        var price = document.getElementById('price').value;
+        var token = document.getElementById('token').value;
+        var shop = document.getElementById('shop').value;
+
+        Telegram.WebApp.sendData(JSON.stringify({
+            points: points,
+            price: price,
+            token: token,
+            shop: shop
+        }));
+
+        Telegram.WebApp.close();
     }
 
 
