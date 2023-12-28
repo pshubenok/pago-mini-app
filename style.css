@@ -1,0 +1,47 @@
+body {
+    background-color: white;
+    padding: 6em;
+}
+
+.title, .title-red {
+    font-size: 8em;
+    font-family: 'aremat font', sans-serif;
+    line-height: 100%;
+}
+
+.title-red {
+    color: red;
+}
+
+.flex-column, .flex-column-aligned {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-column-aligned {
+    align-items: center;
+}
+
+.flex-row-aligned {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.buttons-container {
+    padding-top: 6em;
+}
+
+.btn-floating.action-button {
+    height: 20em;
+    width: 20em;
+    background: #F7F7F7;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    box-shadow: unset;
+}
+
+.gap-10 {
+    gap: 6em;
+}
