@@ -65,6 +65,18 @@
         </div>
 
         <a class="waves-effect waves-light btn request-button disabled" onclick="onSubmit()">Request</a>
+
+        <div class="preloader-wrapper big active hide">
+            <div class="spinner-layer spinner-red-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
@@ -110,6 +122,11 @@
         var price = document.getElementById('price').value;
         var token = document.getElementById('token').value;
         var shop = document.getElementById('shop').value;
+
+        var preloader = document.getElementsByClassName('preloader-wrapper')[0];
+        preloader.classList.remove('hide');
+
+        requestButton.classList.add('hide');
 
         fetch('https://gateway.cloud.processmix.com/deployment-57zo2x61/api/v1/request/retail', {
             method: 'POST',
