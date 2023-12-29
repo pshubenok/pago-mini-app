@@ -61,7 +61,7 @@
             </select>
         </div>
 
-        <a class="waves-effect waves-light btn request-button" onclick="onSubmit()">Request</a>
+<!--        <a class="waves-effect waves-light btn request-button" onclick="onSubmit()">Request</a>-->
     </div>
 </div>
 </body>
@@ -69,7 +69,27 @@
 
 <script>
 
-    Telegram.WebApp.ready().then(handleFulfilledA, handleRejectedA)
+    Telegram.WebApp.ready();
+
+    Telegram.WebApp.MainButton.setParams({
+        text: 'Request',
+        color: "#000000",
+        textColor: '#ffffffx',
+    });
+
+    Telegram.WebApp.MainButton.onClick(function () {
+        var points = document.getElementById('points').value;
+        var price = document.getElementById('price').value;
+        var token = document.getElementById('token').value;
+        var shop = document.getElementById('shop').value;
+
+        Telegram.WebApp.sendData(JSON.stringify({
+            points: points,
+            price: price,
+            token: token,
+            shop: shop
+        }));
+    });
 
 
     function onButtonClick(action) {
@@ -92,25 +112,7 @@
         inputsContainer.style.display = 'flex';
         actionIconContainer.style.display = 'flex';
 
+        Telegram.WebApp.MainButton.set
         Telegram.WebApp.MainButton.isVisible = true;
     }
-
-    function onSubmit() {
-        var points = document.getElementById('points').value;
-        var price = document.getElementById('price').value;
-        var token = document.getElementById('token').value;
-        var shop = document.getElementById('shop').value;
-
-        Telegram.WebApp.sendData(JSON.stringify({
-            points: points,
-            price: price,
-            token: token,
-            shop: shop
-        }));
-
-
-
-    }
-
-
 </script>
