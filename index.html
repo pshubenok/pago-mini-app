@@ -131,7 +131,7 @@
         fetch('https://gateway.cloud.processmix.com/deployment-57zo2x61/api/v1/request/retail', {
             method: 'POST',
             body: JSON.stringify({
-                chat_id: window.Telegram.WebApp.initDataUnsafe,
+                chat_id: window.Telegram.WebApp.initData,
                 points: points,
                 price: price,
                 token: token,
