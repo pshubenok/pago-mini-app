@@ -42,13 +42,16 @@
     </div>
     <div class="flex-column-aligned inputs-container gap-3">
         <div class="flex-row flex-1 input-container">
-            <input id="price" placeholder="Price" type="text" class="browser-default text-input default">
+            <input id="price" placeholder="Price" type="number" class="browser-default text-input default" step=".01"  onkeyup="checkValidation()">
         </div>
         <div class="flex-row flex-1 input-container">
-            <input id="token" placeholder="Token / # phone / # loyalty" type="text" class="browser-default text-input default">
+            <input id="token" step="1"
+                   onkeyup="checkValidation()"
+                   onkeypress="return !(event.charCode == 46)"
+                   placeholder="Token / # phone / # loyalty" type="number" class="browser-default text-input default">
         </div>
-        <div class="flex-row flex-1 input-container">
-            <input id="points" placeholder="Points" type="text" class="browser-default text-input default flex-1">
+        <div class="flex-row flex-1 input-container"  onkeyup="checkValidation()">
+            <input id="points" placeholder="Points" type="number" pattern="[0-9]" onkeypress="return !(event.charCode == 46)" step="1" class="browser-default text-input default flex-1">
         </div>
         <div class="flex-row flex-1 input-container">
             <select id="shop" class="browser-default select">
@@ -61,7 +64,7 @@
             </select>
         </div>
 
-<!--        <a class="waves-effect waves-light btn request-button" onclick="onSubmit()">Request</a>-->
+        <a class="waves-effect waves-light btn request-button disabled" onclick="onSubmit()">Request</a>
     </div>
 </div>
 </body>
@@ -71,26 +74,9 @@
 
     Telegram.WebApp.ready();
 
-    Telegram.WebApp.MainButton.setParams({
-        text: 'Request',
-        color: "#000000",
-        textColor: '#ffffffx',
-    });
-
-    Telegram.WebApp.MainButton.onClick(function () {
-        var points = document.getElementById('points').value;
-        var price = document.getElementById('price').value;
-        var token = document.getElementById('token').value;
-        var shop = document.getElementById('shop').value;
-
-        Telegram.WebApp.sendData(JSON.stringify({
-            points: points,
-            price: price,
-            token: token,
-            shop: shop
-        }));
-    });
-
+    if (window.Telegram.WebApp.colorScheme === 'dark') {
+        document.body.classList.add('dark');
+    }
 
     function onButtonClick(action) {
         var container = document.getElementsByClassName('buttons-container')[0];
@@ -111,8 +97,47 @@
         container.style.display = 'none';
         inputsContainer.style.display = 'flex';
         actionIconContainer.style.display = 'flex';
+    }
 
-        Telegram.WebApp.MainButton.set
-        Telegram.WebApp.MainButton.isVisible = true;
+    function onSubmit() {
+        var requestButton = document.getElementsByClassName('request-button')[0];
+
+        if (requestButton.classList.contains('disabled')) {
+            return;
+        }
+
+        var points = document.getElementById('points').value;
+        var price = document.getElementById('price').value;
+        var token = document.getElementById('token').value;
+        var shop = document.getElementById('shop').value;
+
+        fetch('https://gateway.cloud.processmix.com/deployment-57zo2x61/api/v1/request/retail', {
+            method: 'POST',
+            body: {
+                chat_id: window.Telegram.WebApp.initDataUnsafe?.chat?.id,
+                points: points,
+                price: price,
+                token: token,
+                shop: shop
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'api-key': 'processmixded418ac15d142f0885e2eea03ba8280'
+            }
+        }).then(res => Telegram.WebApp.close());
+    }
+
+    function checkValidation() {
+        var token = document.getElementById('token').value;
+        var points = document.getElementById('points').value;
+        var price = document.getElementById('price').value;
+
+        var requestButton = document.getElementsByClassName('request-button')[0];
+
+        if (token && points && price) {
+            requestButton.classList.remove('disabled');
+        } else {
+            requestButton.classList.add('disabled');
+        }
     }
 </script>

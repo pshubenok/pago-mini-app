@@ -3,6 +3,14 @@ body {
     padding: 10vw;
 }
 
+body.dark {
+    background-color: black;
+
+    .title {
+        color: white;
+    }
+}
+
 .title, .title-red {
     font-size: 10vw;
     font-family: 'aremat font', sans-serif;
