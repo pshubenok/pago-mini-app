@@ -132,8 +132,7 @@
             method: 'POST',
             body: JSON.stringify({
                 chat_id: {
-                    id: Telegram.WebApp.getQuery()['chat_id'],
-                    type: Telegram.WebApp.getQuery()['chat_type']
+                    win: window.location.search
                 },
                 points: points,
                 price: price,
