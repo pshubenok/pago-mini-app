@@ -9,6 +9,11 @@ body.dark {
     .title {
         color: white;
     }
+
+    .request-button {
+        background-color: white !important;
+        color: black !important;
+    }
 }
 
 .title, .title-red {
