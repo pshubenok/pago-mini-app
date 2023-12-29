@@ -69,7 +69,7 @@
 
 <script>
 
-    Telegram.WebApp.ready();
+    Telegram.WebApp.ready().then(handleFulfilledA, handleRejectedA)
 
 
     function onButtonClick(action) {
@@ -92,7 +92,7 @@
         inputsContainer.style.display = 'flex';
         actionIconContainer.style.display = 'flex';
 
-
+        Telegram.WebApp.MainButton.isVisible = true;
     }
 
     function onSubmit() {
@@ -107,6 +107,9 @@
             token: token,
             shop: shop
         }));
+
+
+
     }
 
 
