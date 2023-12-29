@@ -1,10 +1,10 @@
 body {
     background-color: white;
-    padding: 6rem;
+    padding: 10vw;
 }
 
 .title, .title-red {
-    font-size: 8rem;
+    font-size: 10vw;
     font-family: 'aremat font', sans-serif;
     line-height: 100%;
 }
@@ -33,13 +33,9 @@ body {
     align-items: center;
 }
 
-.buttons-container, .inputs-container {
-    padding-top: 6em;
-}
-
 .btn-floating.action-button {
-    height: 20rem;
-    width: 20rem;
+    height: 28vw;
+    width: 28vw;
     background: #F7F7F7;
     align-items: center;
     display: flex;
@@ -47,11 +43,16 @@ body {
     box-shadow: unset;
 }
 
+.action-icon-button {
+    height: 18vw;
+    width: 18vw;
+}
+
 .gap-6 {
-    gap: 6rem;
+    gap: 10vw;
 }
 .gap-3 {
-    gap: 3rem;
+    gap: 3vw;
 }
 
 .action-icon-container {
@@ -61,24 +62,30 @@ body {
     margin-left: auto;
     border-radius: 50%;
     background: #F7F7F7;
-    height: 16rem;
-    width: 16rem;
+    height: 22vw;
+    width: 22vw;
+}
+
+.action-icon {
+    height: 14vw;
+    width: 14vw;
 }
 
 .inputs-container {
     display: none;
 }
 
-.text-input.default {
-    font-size: 4rem !important;
-    height: unset !important;
-    transition: unset !important;
+.text-input {
+    border: 0;
+    width: 100%;
+    border-radius: 2vw;
     color: #565555;
-    border-bottom: 0 !important;
-    background-color: #F7F7F7 !important;
-    border-radius: 0.2rem !important;
-    padding: 1rem !important;
+    background-color: #F7F7F7;
+    font-size: 4vw;
+    height: 8vw;
+    padding: 0 2vw;
 }
+
 
 .text-input.default:focus {
     border-bottom: 0 !important;
@@ -92,26 +99,26 @@ body {
 }
 
 .select {
-    font-size: 4rem !important;
-    height: unset !important;
-    transition: unset !important;
+    border: 0;
+    width: 100%;
+    border-radius: 2vw;
     color: #565555;
-    border-bottom: 0 !important;
-    background-color: #F7F7F7 !important;
-    border-radius: 0.2rem !important;
-    padding: 1rem !important;
+    background-color: #F7F7F7;
+    font-size: 4vw;
+    height: 8vw;
+    padding: 0 2vw;
 }
 
 .request-button {
     background-color: black !important;
     line-height: 100% !important;
-    font-size: 4rem !important;
+    font-size: 5vw !important;
     border: 0 !important;
     cursor: pointer !important;
     color: white !important;
     font-family: 'aremat font', sans-serif !important;
     height: unset !important;
-    padding: 1.6rem 5rem !important;
-    border-radius: 4rem !important;
+    padding: 1.6vw 5vw !important;
+    border-radius: 4vw !important;
     text-transform: unset !important;
 }
