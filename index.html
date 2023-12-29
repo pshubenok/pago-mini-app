@@ -77,6 +77,8 @@
             </div>
             </div>
         </div>
+
+        <textarea id="result" class="browser-default text-input default hide" rows="5" cols="50" readonly></textarea>
     </div>
 </div>
 </body>
@@ -111,7 +113,7 @@
         actionIconContainer.style.display = 'flex';
     }
 
-    function onSubmit() {
+    async function onSubmit() {
         var requestButton = document.getElementsByClassName('request-button')[0];
 
         if (requestButton.classList.contains('disabled')) {
@@ -128,10 +130,11 @@
 
         requestButton.classList.add('hide');
 
-        fetch('https://gateway.cloud.processmix.com/deployment-57zo2x61/api/v1/request/retail', {
+
+        const response = await fetch('https://gateway.cloud.processmix.com/deployment-57zo2x61/api/v1/request/retail', {
             method: 'POST',
             body: JSON.stringify({
-                chatId: Telegram.WebApp.initDataUnsafe.user.id,
+                chatId: Telegram.WebApp.initDataUnsafe?.user?.id,
                 points: points,
                 price: price,
                 token: token,
@@ -141,7 +144,21 @@
                 'Content-Type': 'application/json',
                 'api-key': 'processmixded418ac15d142f0885e2eea03ba8280'
             }
-        }).then(res => Telegram.WebApp.close());
+        });
+
+        if (!response.ok) {
+            response.json().then((json) => {
+                var result = document.getElementById('result');
+
+                result.classList.remove('hide');
+                result.value = 'Error: ' + json.message;
+
+                preloader.classList.add('hide');
+                requestButton.classList.remove('hide');
+            })
+        } else {
+            Telegram.WebApp.close();
+        }
     }
 
     function checkValidation() {
