@@ -41,6 +41,16 @@
         </div>
     </div>
     <div class="flex-column-aligned inputs-container gap-3">
+
+        <div class="flex-row flex-1 input-container">
+            <select id="autoRetailer" class="browser-default select" style="display: none">
+                <option value="1">Rolf</option>
+                <option value="2">Major-auto</option>
+                <option value="3">Automir</option>
+                <option value="4">Avilon</option>
+            </select>
+        </div>
+
         <div class="flex-row flex-1 input-container">
             <select id="model" class="browser-default select" style="display: none" onchange="onAutoChange()">
                 <option value="1">Avatar 11</option>
@@ -126,6 +136,7 @@
             selectedItem = 3;
             actionIcon.src = 'assets/image3.png';
             document.getElementById('model').style.display = 'flex'
+            document.getElementById('autoRetailer').style.display = 'flex'
             document.getElementById('price').setAttribute('readonly', 'true');
 
             onAutoChange();
@@ -151,6 +162,7 @@
         var token = document.getElementById('token').value;
         var shop = document.getElementById('shop').value;
         var model = document.getElementById('model').value;
+        var autoRetailer = document.getElementById('autoRetailer').value;
 
         var preloader = document.getElementsByClassName('preloader-wrapper')[0];
         preloader.classList.remove('hide');
@@ -169,21 +181,19 @@
             } break;
             case 2: {
                 data = {
-                    price: price,
-                    shop: shop
+                    price: price
                 }
             } break;
             case 3: {
                 data = {
                     model: model,
                     price: price,
-                    shop: shop
+                    shop: autoRetailer
                 }
             } break;
             case 4: {
                 data = {
-                    price: price,
-                    shop: shop
+                    price: price
                 }
             } break;
         }
@@ -265,7 +275,5 @@
         } else if (model === '5') {
             price.value = '23990000';
         }
-
-        checkValidation();
     }
 </script>
