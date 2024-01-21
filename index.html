@@ -62,18 +62,16 @@
         </div>
 
         <div class="flex-row flex-1 input-container">
-            <input id="price" placeholder="Price" type="number" class="browser-default text-input default" step=".01"  onkeyup="checkValidation()">
+            <input id="price" placeholder="Price" type="number" class="browser-default text-input default" step=".01">
         </div>
         <div class="flex-row flex-1 input-container">
             <input id="token" step="1"
-                   onkeyup="checkValidation()"
                    onkeypress="return !(event.charCode == 46)"
                    placeholder="Token / # phone / # loyalty" type="number" class="browser-default text-input default">
         </div>
         <div class="flex-row flex-1 input-container">
             <input id="points" placeholder="Points"
                    style="display: none"
-                   onkeyup="checkValidation()"
                    type="number" pattern="[0-9]" onkeypress="return !(event.charCode == 46)" step="1" class="browser-default text-input default flex-1">
         </div>
         <div class="flex-row flex-1 input-container">
@@ -87,7 +85,7 @@
             </select>
         </div>
 
-        <a class="waves-effect waves-light btn request-button disabled" onclick="onSubmit()">Request</a>
+        <a class="waves-effect waves-light btn request-button" onclick="onSubmit()">Request</a>
 
         <div class="preloader-wrapper big active hide">
             <div class="spinner-layer spinner-red-only">
@@ -153,13 +151,30 @@
     async function onSubmit() {
         var requestButton = document.getElementsByClassName('request-button')[0];
 
-        if (requestButton.classList.contains('disabled')) {
-            return;
-        }
-
         var points = document.getElementById('points').value;
         var price = document.getElementById('price').value;
         var token = document.getElementById('token').value;
+
+        document.getElementById('points').classList.remove('invalid');
+        document.getElementById('price').classList.remove('invalid');
+        document.getElementById('token').classList.remove('invalid');
+
+        if (!checkValidation()) {
+            if (!points) {
+                document.getElementById('points').classList.add('invalid');
+            }
+
+            if (!price) {
+                document.getElementById('price').classList.add('invalid');
+            }
+
+            if (!token) {
+                document.getElementById('token').classList.add('invalid');
+            }
+
+            return;
+        }
+
         var shop = document.getElementById('shop').value;
         var model = document.getElementById('model').value;
         var autoRetailer = document.getElementById('autoRetailer').value;
@@ -251,13 +266,15 @@
         }
 
 
-        var requestButton = document.getElementsByClassName('request-button')[0];
+        return isAllFilled;
 
-        if (isAllFilled) {
-            requestButton.classList.remove('disabled');
-        } else {
-            requestButton.classList.add('disabled');
-        }
+        // var requestButton = document.getElementsByClassName('request-button')[0];
+        //
+        // if (isAllFilled) {
+        //     requestButton.classList.remove('disabled');
+        // } else {
+        //     requestButton.classList.add('disabled');
+        // }
     }
 
     function onAutoChange() {

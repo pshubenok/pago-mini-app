@@ -14,10 +14,10 @@ body.dark {
         background-color: white !important;
         color: black !important;
     }
+}
 
-    .request-button:disabled {
-        color: gray !important;
-    }
+input.invalid {
+    border: 0.2vw solid red !important;
 }
 
 .title, .title-red {
