@@ -233,7 +233,7 @@
                 isAllFilled = isAllFilled;
             } break;
             case 3: {
-                isAllFilled = isAllFilled && document.getElementById('models').value;
+                isAllFilled = isAllFilled && document.getElementById('model').value;
             } break;
             case 4: {
                 isAllFilled = isAllFilled;
@@ -251,18 +251,18 @@
     }
 
     function onAutoChange() {
-        var models = document.getElementById('model').value;
+        var model = document.getElementById('model').value;
         var price = document.getElementById('price');
 
-        if (models === '1') {
+        if (model === '1') {
             price.value = '5300000';
-        } else if (models === '2') {
+        } else if (model === '2') {
             price.value = '11300000';
-        } else if (models === '3') {
+        } else if (model === '3') {
             price.value = '7000000';
-        } else if (models === '4') {
+        } else if (model === '4') {
             price.value = '1800000';
-        } else if (models === '5') {
+        } else if (model === '5') {
             price.value = '23990000';
         }
 
