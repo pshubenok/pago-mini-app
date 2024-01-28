@@ -62,7 +62,11 @@
         </div>
 
         <div class="flex-row flex-1 input-container">
-            <input id="price" placeholder="Price" type="number" class="browser-default text-input default" step=".01">
+            <input id="name" placeholder="Name" style="display: none" type="text" class="browser-default text-input default">
+        </div>
+
+        <div class="flex-row flex-1 input-container">
+            <input id="price" placeholder="Price" style="display: none" type="number" class="browser-default text-input default" step=".01">
         </div>
         <div class="flex-row flex-1 input-container">
             <input id="token" type="text"
@@ -125,21 +129,25 @@
             actionIcon.src = 'assets/image1.png';
             document.getElementById('points').style.display = 'flex'
             document.getElementById('shop').style.display = 'flex'
+            document.getElementById('price').style.display = 'flex'
             document.getElementById('price').removeAttribute('readonly');
 
         } else if (action === 2) {
             selectedItem = 2;
             actionIcon.src = 'assets/image2.png';
+            document.getElementById('name').style.display = 'flex'
         } else if (action === 3) {
             selectedItem = 3;
             actionIcon.src = 'assets/image3.png';
             document.getElementById('model').style.display = 'flex'
             document.getElementById('autoRetailer').style.display = 'flex'
+            document.getElementById('price').style.display = 'flex'
             document.getElementById('price').setAttribute('readonly', 'true');
 
             onAutoChange();
         } else if (action === 4) {
             selectedItem = 4;
+            document.getElementById('price').style.display = 'flex'
             actionIcon.src = 'assets/image4.png';
         }
 
@@ -196,7 +204,7 @@
             } break;
             case 2: {
                 data = {
-                    price: price
+                    name: document.getElementById('name').value
                 }
             } break;
             case 3: {
@@ -244,37 +252,25 @@
     }
 
     function checkValidation() {
-        let isAllFilled = false;
-        var token = document.getElementById('token').value;
-        var price = document.getElementById('price').value;
-
-        isAllFilled = token && price;
+        let isAllFilled = !!document.getElementById('token').value;
 
         switch (selectedItem) {
             case 1: {
-                isAllFilled = isAllFilled && document.getElementById('points').value;
+                isAllFilled = isAllFilled && document.getElementById('points').value && document.getElementById('price').value;
             } break;
             case 2: {
-                isAllFilled = isAllFilled;
+                isAllFilled = isAllFilled && document.getElementById('name').value;
             } break;
             case 3: {
-                isAllFilled = isAllFilled && document.getElementById('model').value;
+                isAllFilled = isAllFilled && document.getElementById('model').value  && document.getElementById('price').value;
             } break;
             case 4: {
-                isAllFilled = isAllFilled;
+                isAllFilled = isAllFilled && document.getElementById('price').value;
             } break;
         }
 
 
         return isAllFilled;
-
-        // var requestButton = document.getElementsByClassName('request-button')[0];
-        //
-        // if (isAllFilled) {
-        //     requestButton.classList.remove('disabled');
-        // } else {
-        //     requestButton.classList.add('disabled');
-        // }
     }
 
     function onAutoChange() {
