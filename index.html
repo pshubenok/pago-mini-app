@@ -12,7 +12,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     </head>
-<body>
+<body class="dark">
 <div class="flex-column gap-6">
     <div class="flex-row top-container">
         <div class="flex-column">
@@ -217,6 +217,12 @@
         document.getElementById('limit-phone').value = '';
         document.getElementById('limit-pinfl').value = '';
         document.getElementById('agree').checked = false;
+
+        var preloader = document.getElementById('sim-preload');
+        preloader.classList.add('hide');
+
+        var simulateBtn = document.getElementById('simulateBtn');
+        simulateBtn.classList.remove('hide');
     }
 
     function checkLimitForm() {

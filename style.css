@@ -14,6 +14,14 @@ body.dark {
         background-color: white !important;
         color: black !important;
     }
+
+    .limit-title, .limit-sub-title, .limit-text {
+        color: white;
+    }
+
+    .limit-button {
+        border: 2px solid white !important;
+    }
 }
 
 input.invalid {
