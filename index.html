@@ -4,6 +4,7 @@
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.cdnfonts.com/css/aremat-font" rel="stylesheet">
+        <link href="https://fonts.cdnfonts.com/css/archivo" rel="stylesheet">
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -13,7 +14,7 @@
     </head>
 <body>
 <div class="flex-column gap-6">
-    <div class="flex-row">
+    <div class="flex-row top-container">
         <div class="flex-column">
             <span class="title">Pago</span>
             <span class="title-red">Pay</span>
@@ -38,6 +39,12 @@
             <a class="btn-floating waves-effect waves-light action-button" onclick="onButtonClick(4)">
                 <img class="action-icon-button" src="assets/image4.png">
             </a>
+        </div>
+        <div class="flex-row-aligned gap-6">
+            <a class="btn-floating waves-effect waves-light action-button" onclick="onButtonClick(5)">
+                <img class="action-icon-button" src="assets/image5.png">
+            </a>
+            <div class="empty-div"></div>
         </div>
     </div>
     <div class="flex-column-aligned inputs-container gap-3">
@@ -105,6 +112,81 @@
 
         <textarea id="result" class="browser-default text-input default hide" rows="5" cols="50" readonly></textarea>
     </div>
+    <div class="flex-column-aligned limit-calculation-container gap-6">
+        <div class="flex-row-aligned distance-between">
+            <span class="limit-title">Limit calculation</span>
+            <div class="limit-icon-container">
+                <img src="assets/image5.png">
+            </div>
+        </div>
+        <div class="flex-column-aligned width-100 gap-3">
+            <input id="limit-phone" placeholder="Phone"  type="text" class="browser-default limit-text-input default" onkeydown="checkLimitForm()">
+            <input id="limit-pinfl" placeholder="PINFL"  type="number" pattern="[0-9]" class="browser-default limit-text-input default" onkeydown="checkLimitForm()">
+
+            <div class="flex-row-aligned gap-3">
+                <div class="flex-column checkbox-container"><input type="checkbox" id="agree" name="agree" class="browser-default" onchange="checkLimitForm()"></div>
+                <div class="flex-column"><label class="limit-text">Customer agrees to the terms and conditions</label></div>
+            </div>
+
+        </div>
+        <a class="waves-effect waves-light btn limit-button disabled" id="simulateBtn" onclick="onSimulateClick()" >Simulate</a>
+
+        <div class="preloader-wrapper big active hide" id="sim-preload">
+            <div class="spinner-layer spinner-red-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+            </div>
+        </div>
+
+        <textarea id="result2" class="browser-default text-input default hide" rows="5" cols="50" readonly></textarea>
+    </div>
+    <div class="flex-column-aligned limit-calculation-result-container gap-6">
+        <div class="flex-column gap-3">
+            <span class="limit-title" id="limit-amount-max"></span>
+            <span class="limit-sub-title">loan approved</span>
+        </div>
+        <div class="flex-column-aligned gap-3 width-100">
+            <div class="flex-row-aligned loan-picker width-100">
+                <a class="waves-effect waves-light btn arrow-button" onclick="minus()" ><img src="assets/a-l.png" class="arrow-image"></a>
+                <span class="limit-sub-title-edit" id="limit-amount">0 uzd</span>
+                <a class="waves-effect waves-light btn arrow-button disabled" onclick="plus()" ><img src="assets/a-r.png" class="arrow-image"></a>
+            </div>
+            <div class="flex-row-aligned gap-3 width-100">
+                <div class="flex-row-aligned flex-1 loan-picker">
+                    <select id="limit-term" class="browser-default term-select" onchange="onLimitTermChange()">
+                        <option value="60" selected>60 m</option>
+                        <option value="48">48 m</option>
+                        <option value="36">36 m</option>
+                        <option value="24">24 m</option>
+                        <option value="12">12 m</option>
+                    </select>
+                    <a class="waves-effect waves-light btn arrow-button" onclick="openSelect()" ><img src="assets/a-d.png" class="arrow-image"></a>
+                </div>
+                <div class="flex-row-aligned flex-1 loan-picker">
+                    <span class="limit-sub-title-edit" id="limit-rate"></span>
+                </div>
+            </div>
+            <div class="flex-row-aligned loan-picker width-100">
+                <span class="limit-sub-title-edit-not-center" id="payment-amount">0 uzd</span>
+                <span class="limit-final-placeholder">Payment</span>
+            </div>
+        </div>
+        <a class="waves-effect waves-light btn limit-button" onclick="getInApp()" >Get in-app</a>
+    </div>
+
+    <div class="flex-column-aligned limit-calculation-result-decline-container gap-20">
+        <div class="flex-column gap-3">
+            <span class="limit-title">Sorry</span>
+            <span class="limit-sub-title">application declined</span>
+        </div>
+
+        <a class="waves-effect waves-light btn limit-button" onclick="newOne()" >New one</a>
+    </div>
 </div>
 </body>
 </html>
@@ -112,10 +194,217 @@
 <script>
     let selectedItem = 0;
 
+    let loanAmount = 0;
+    let maxAmount = 0;
+
     Telegram.WebApp.ready();
 
     if (window.Telegram.WebApp.colorScheme === 'dark') {
         document.body.classList.add('dark');
+    }
+
+    function getInApp() {
+
+    }
+
+    function newOne() {
+        var limitCalculationContainer = document.getElementsByClassName('limit-calculation-container')[0];
+        var limitCalculationResultDeclineContainer = document.getElementsByClassName('limit-calculation-result-decline-container')[0];
+
+        limitCalculationContainer.style.display = 'flex';
+        limitCalculationResultDeclineContainer.style.display = 'none';
+
+        document.getElementById('limit-phone').value = '';
+        document.getElementById('limit-pinfl').value = '';
+        document.getElementById('agree').checked = false;
+    }
+
+    function checkLimitForm() {
+        var phone = document.getElementById('limit-phone').value;
+        var pinfl = document.getElementById('limit-pinfl').value;
+        var agree = document.getElementById('agree').checked;
+
+        var button = document.getElementsByClassName('limit-button')[0];
+
+        if (phone && pinfl && agree) {
+            button.classList.remove('disabled');
+        } else {
+            button.classList.add('disabled');
+        }
+    }
+
+    function openSelect() {
+        var select = document.getElementById('limit-term');
+        select.showPicker()
+    }
+
+    function showDecline() {
+        var limitCalculationContainer = document.getElementsByClassName('limit-calculation-container')[0];
+        var limitCalculationResultDeclineContainer = document.getElementsByClassName('limit-calculation-result-decline-container')[0];
+
+        limitCalculationContainer.style.display = 'none';
+        limitCalculationResultDeclineContainer.style.display = 'flex';
+    }
+
+    async function onSimulateClick() {
+
+        var preloader = document.getElementById('sim-preload');
+        preloader.classList.remove('hide');
+
+
+        var simulateBtn = document.getElementById('simulateBtn');
+
+        simulateBtn.classList.add('hide');
+
+        const random = Math.floor(Math.random() * 100);
+
+        let status = 'approved';
+
+        if (random < 30) {
+            status = 'declined';
+        }
+
+        var limitAmountMax = document.getElementById('limit-amount-max');
+        var limitAmount = document.getElementById('limit-amount');
+
+        maxAmount = Math.floor(Math.random() * 100) * 1000000;
+        loanAmount = maxAmount;
+
+        var formattedAmount = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'UZS',
+        }).format(maxAmount);
+
+        limitAmountMax.innerText = formattedAmount;
+        limitAmount.innerText = formattedAmount;
+
+        let rate = 0;
+
+        while (rate < 24 || rate > 45) {
+            rate = Math.floor(Math.random() * 100);
+        }
+
+        document.getElementById('limit-rate').innerText = rate + ' %';
+
+        let data = {
+            chatId: Telegram.WebApp.initDataUnsafe?.user?.id,
+            phone: document.getElementById('limit-phone').value,
+            pinfl: document.getElementById('limit-pinfl').value,
+            amount: loanAmount,
+            term: 60,
+            rate,
+            status
+        }
+
+        if (status === 'declined') {
+            data.amount = 0;
+            data.term = 0;
+            data.rate = 0;
+        }
+
+        const response = await fetch('https://gateway.cloud.processmix.com/org-1008/pago/api/v1/loan', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                'api-key': 'processmixda488883908a4326a4876dde0232c24d'
+            }
+        });
+
+        if (!response.ok) {
+            response.json().then((json) => {
+                var result = document.getElementById('result2');
+
+                result.classList.remove('hide');
+                result.value = 'Error: ' + json.message;
+
+                preloader.classList.add('hide');
+                simulateBtn.classList.remove('hide');
+            })
+        } else {
+            if (status === 'declined') {
+                showDecline();
+            } else {
+                var limitCalculationContainer = document.getElementsByClassName('limit-calculation-container')[0];
+                var limitCalculationResultContainer = document.getElementsByClassName('limit-calculation-result-container')[0];
+
+                limitCalculationContainer.style.display = 'none';
+                limitCalculationResultContainer.style.display = 'flex';
+            }
+        }
+
+        setPayment();
+    }
+
+    function plus() {
+        if (loanAmount < maxAmount) {
+            loanAmount += 1000000;
+        }
+
+        var formattedAmount = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'UZS',
+        }).format(loanAmount);
+
+        document.getElementById('limit-amount').innerText = formattedAmount;
+
+        if (loanAmount >= maxAmount) {
+            document.getElementsByClassName('arrow-button')[1].classList.add('disabled');
+        } else {
+            document.getElementsByClassName('arrow-button')[0].classList.remove('disabled');
+        }
+
+        setPayment();
+    }
+
+    function calculatePmt(rate, nper, pv) {
+        var pvif, pmt;
+
+        pvif = Math.pow(1 + rate, nper);
+        pmt = rate / (pvif - 1) * -(pv * pvif);
+
+        return pmt * -1;
+    }
+
+    function setPayment() {
+        var rate = parseFloat(document.getElementById('limit-rate').innerText.replace(' %', '')) / 100;
+        var term = parseInt(document.getElementById('limit-term').value);
+        var amount = loanAmount;
+
+        var payment = calculatePmt(rate / 12, term, amount);
+
+        var formattedAmount = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'UZS',
+        }).format(payment);
+
+        document.getElementById('payment-amount').innerText = formattedAmount;
+    }
+
+    function minus() {
+        if (loanAmount > 0) {
+            loanAmount -= 1000000;
+        }
+
+        var formattedAmount = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'UZS',
+        }).format(loanAmount);
+
+        document.getElementById('limit-amount').innerText = formattedAmount;
+
+        if (loanAmount <= 0) {
+            document.getElementsByClassName('arrow-button')[0].classList.add('disabled');
+        } else {
+            document.getElementsByClassName('arrow-button')[1].classList.remove('disabled');
+        }
+
+        setPayment();
+    }
+
+
+    function onLimitTermChange() {
+        setPayment();
     }
 
     function onButtonClick(action) {
@@ -123,6 +412,15 @@
         var actionIcon = document.getElementsByClassName('action-icon')[0];
         var inputsContainer = document.getElementsByClassName('inputs-container')[0];
         var actionIconContainer = document.getElementsByClassName('action-icon-container')[0];
+        var limitCalculationContainer = document.getElementsByClassName('limit-calculation-container')[0];
+        var topContainer = document.getElementsByClassName('top-container')[0];
+
+        if (action === 5) {
+            limitCalculationContainer.style.display = 'flex';
+            container.style.display = 'none';
+            topContainer.style.display = 'none';
+            return;
+        }
 
         if (action === 1) {
             selectedItem = 1;
@@ -266,6 +564,9 @@
             } break;
             case 4: {
                 isAllFilled = isAllFilled && document.getElementById('price').value;
+            } break;
+            case 5: {
+                isAllFilled = document.getElementById('limit-phone').value && document.getElementById('limit-pinfl').value && document.getElementById('agree').checked;
             } break;
         }
 
