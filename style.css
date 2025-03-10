@@ -16,7 +16,7 @@ body.dark {
     }
 
     .limit-title, .limit-sub-title, .limit-text {
-        color: white;
+        color: white !important;
     }
 
     .limit-button {
